@@ -14,8 +14,8 @@ if (!empty($clearDbUrl)) {
     $clearDbParsed = parse_url($clearDbUrl);
 
     $clearDb['host'] = $clearDbParsed["host"];
-    $clearDb['username'] = $clearDbParsed["username"];
-    $clearDb['password'] = $clearDbParsed["password"];
+    $clearDb['username'] = $clearDbParsed["user"];
+    $clearDb['password'] = $clearDbParsed["pass"];
     $clearDb['database'] = substr($clearDbParsed["path"], 1);
 }
 
