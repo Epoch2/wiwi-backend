@@ -6,7 +6,12 @@ App\Models\User:
        generator:
          strategy: UUID
   fields:
-    first_name:
+    email:
       type: string
-    last_name:
+      unique: true
+    password:
+      type: string
+    firstName:
+      type: string
+    lastName:
       type: string

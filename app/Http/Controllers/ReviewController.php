@@ -24,6 +24,11 @@ use App\Models\Review;
 // Serializers
 use App\Serializers\ReviewSerializer;
 
+/**
+ * Class ReviewController
+ *
+ * @Resource("Reviews" uri="/reviews")
+ */
 class ReviewController extends Controller
 {
     private $reviewRepository;
@@ -33,6 +38,14 @@ class ReviewController extends Controller
         $this->reviewRepository = EntityManager::getRepository(Review::class);
     }
 
+    /**
+     * List all reviews
+     *
+     * Get a JSON representation of all the registered users.
+     *
+     * @Get("/")
+     * @Response(200, body=[{"id": "407b1ece-a115-11e5-b1d9-22000b95c3d9" , "worth_it": true}])
+     */
     public function index()
     {
         $reviews = $this->reviewRepository->findAll();
@@ -43,6 +56,17 @@ class ReviewController extends Controller
         );
     }
 
+    /**
+     * Submit a new review
+     *
+     * Submit a new review with a `verdict`
+     *
+     * @Post("/")
+     * @Request({"worth_it": true})
+     * @Response(200, body={"id": "407b1ece-a115-11e5-b1d9-22000b95c3d9" , "worth_it": true})
+     *
+     * @param Request $request
+     */
     public function store(Request $request)
     {
         $input = $request->json();

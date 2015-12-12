@@ -87,15 +87,16 @@ $app->routeMiddleware([
 // $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 
-// Doctrine Service Provider
+// Doctrine
 $app->register(LaravelDoctrine\ORM\DoctrineServiceProvider::class);
 
-// JWT Service Provider
+// JWT
 $app->register(Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class);
 
 /*
  * Aliases
  */
+
 // Doctrine
 class_alias('LaravelDoctrine\ORM\Facades\EntityManager', 'EntityManager');
 class_alias('LaravelDoctrine\ORM\Facades\Registry', 'Registry');
@@ -103,6 +104,7 @@ class_alias('LaravelDoctrine\ORM\Facades\Doctrine', 'Doctrine');
 
 // JWT
 class_alias('Tymon\JWTAuth\Facades\JWTAuth', 'JWTAuth');
+
 
 /*
 |--------------------------------------------------------------------------

@@ -16,6 +16,12 @@ $app->get('/', function () use ($app) {
 });
 
 $app->group(['namespace' => 'App\Http\Controllers'], function($app) {
-    $app->get('/reviews', 'ReviewController@index');
-    $app->post('/reviews', 'ReviewController@store');
+    // Protected
+    $app->group(['namespace' => 'App\Http\Controllers', 'middleware' => ['jwt.auth', 'jwt.refresh']], function($app) {
+        $app->get('/reviews', 'ReviewController@index');
+        $app->post('/reviews', 'ReviewController@store');
+    });
+
+    $app->post('/login', 'AuthController@login');
+    $app->post('/register', 'UserController@store');
 });
