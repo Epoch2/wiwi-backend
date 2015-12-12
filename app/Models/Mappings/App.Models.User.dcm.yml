@@ -1,0 +1,12 @@
+App\Models\User:
+  type: entity
+  table: users
+  id:
+     id:
+       generator:
+         strategy: UUID
+  fields:
+    first_name:
+      type: string
+    last_name:
+      type: string

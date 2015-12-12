@@ -1,0 +1,10 @@
+App\Models\Review:
+  type: entity
+  table: reviews
+  id:
+    id:
+      generator:
+        strategy: UUID
+  fields:
+    verdict:
+      type: smallint
