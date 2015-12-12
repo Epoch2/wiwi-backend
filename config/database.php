@@ -1,5 +1,24 @@
 <?php
 
+
+// Heroku ClearDB
+$clearDb = [
+    'host' => null,
+    'username' => null,
+    'password' => null,
+    'database' => null,
+];
+$clearDbUrl = getenv('CLEARDB_DATABASE_URL');
+
+if (!empty($clearDbUrl)) {
+    $clearDbParsed = parse_url($clearDbUrl);
+
+    $clearDb['host'] = $clearDbParsed["host"];
+    $clearDb['username'] = $clearDbParsed["username"];
+    $clearDb['password'] = $clearDbParsed["password"];
+    $clearDb['database'] = substr($clearDbParsed["path"], 1);
+}
+
 return [
 
     /*
@@ -54,10 +73,10 @@ return [
 
         'mysql' => [
             'driver'    => 'mysql',
-            'host'      => env('DB_HOST', 'localhost'),
-            'database'  => env('DB_DATABASE', 'forge'),
-            'username'  => env('DB_USERNAME', 'forge'),
-            'password'  => env('DB_PASSWORD', ''),
+            'host'      => (!is_null($clearDb['host']) ? $clearDb['host'] : env('DB_HOST', 'localhost')),
+            'database'  => (!is_null($clearDb['database']) ? $clearDb['database'] : env('DB_DATABASE', 'forge'),
+            'username'  => (!is_null($clearDb['username']) ? $clearDb['username'] : env('DB_USERNAME', 'forge'),
+            'password'  => (!is_null($clearDb['password']) ? $clearDb['password'] : env('DB_PASSWORD', ''),
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',
