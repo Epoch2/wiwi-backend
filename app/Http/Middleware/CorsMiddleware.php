@@ -6,7 +6,8 @@ use Illuminate\Http\Response;
 class CorsMiddleware {
     protected $settings = array(
         'origin' => '*',    // Wide Open!
-        'allowMethods' => 'GET,HEAD,PUT,POST,DELETE'
+        'allowMethods' => 'GET,HEAD,PUT,POST,DELETE',
+        'exposeHeaders' => 'Authorization'
     );
     protected function setOrigin($req, $rsp) {
         $origin = $this->settings['origin'];
@@ -19,8 +20,8 @@ class CorsMiddleware {
         $rsp->header('Access-Control-Allow-Origin', $origin);
     }
     protected function setExposeHeaders($req, $rsp) {
-        if (isset($this->settings->exposeHeaders)) {
-            $exposeHeaders = $this->settings->exposeHeaders;
+        if (isset($this->settings['exposeHeaders'])) {
+            $exposeHeaders = $this->settings['exposeHeaders'];
             if (is_array($exposeHeaders)) {
                 $exposeHeaders = implode(", ", $exposeHeaders);
             }
@@ -92,9 +93,6 @@ class CorsMiddleware {
         else {
             $response = $next($request);
         }
-
-        $response->header('Access-Control-Allow-Headers', $request->header('Access-Control-Request-Headers'));
-
         $this->setCorsHeaders($request, $response);
         return $response;
     }
