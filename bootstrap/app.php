@@ -93,6 +93,12 @@ $app->register(LaravelDoctrine\ORM\DoctrineServiceProvider::class);
 // JWT
 $app->register(Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class);
 
+// Repositories
+$app->register(App\Providers\DoctrineRepositoryProvider::class);
+
+// Services
+$app->register(App\Providers\ResourceServiceProvider::class);
+
 /*
  * Aliases
  */

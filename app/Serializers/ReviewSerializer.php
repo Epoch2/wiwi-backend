@@ -12,21 +12,25 @@
 // Models
 use App\Models\Review;
 
+// Serializers
+use App\Serializers\ProductSerializer;
+
 class ReviewSerializer
 {
     public function one(Review $review)
     {
         return [
             'id' => $review->getId(),
+            'product' => (new ProductSerializer)->one($review->getProduct()),
             'worth_it' => $this->verdictToHumanReadable($review->getVerdict()),
         ];
     }
 
-    public function many($reviewCollection)
+    public function many($reviews)
     {
         return array_map(function($review) {
             return $this->one($review);
-        }, $reviewCollection);
+        }, $reviews);
     }
 
     private function verdictToHumanReadable($verdict)

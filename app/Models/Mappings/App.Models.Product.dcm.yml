@@ -1,0 +1,21 @@
+App\Models\Product:
+  type: entity
+  table: products
+  id:
+    id:
+      generator:
+        strategy: UUID
+
+  oneToMany:
+    reviews:
+      targetEntity: App\Models\Review
+      mappedBy: product
+      cascade: ["remove"]
+
+  fields:
+    title:
+      type: string
+    imageUrl:
+      type: string
+      nullable: true
+

@@ -8,3 +8,17 @@ App\Models\Review:
   fields:
     verdict:
       type: smallint
+
+  manyToOne:
+    product:
+      targetEntity: App\Models\Product
+      inversedBy: reviews
+      joinColumn:
+        name: product_id
+        referencedColumnName: id
+    author:
+      targetEntity: App\Models\User
+      inversedBy: reviews
+      joinColumn:
+        name: user_id
+        referencedColumnName: id

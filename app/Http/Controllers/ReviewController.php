@@ -18,34 +18,31 @@ use EntityManager;
 // Helpers
 use Epoch2\HttpCodes;
 
+// Services
+use App\Services\ReviewService;
+
+// Repositories
+use App\Repositories\Contracts\ReviewRepository;
+
 // Models
 use App\Models\Review;
 
 // Serializers
 use App\Serializers\ReviewSerializer;
 
-/**
- * Class ReviewController
- *
- * @Resource("Reviews" uri="/reviews")
- */
 class ReviewController extends Controller
 {
     private $reviewRepository;
+    private $reviewService;
 
-    public function __construct()
-    {
-        $this->reviewRepository = EntityManager::getRepository(Review::class);
+    public function __construct(
+        ReviewRepository $reviewRepository,
+        ReviewService $reviewService
+    ) {
+        $this->reviewRepository = $reviewRepository;
+        $this->reviewService = $reviewService;
     }
 
-    /**
-     * List all reviews
-     *
-     * Get a JSON representation of all the registered users.
-     *
-     * @Get("/")
-     * @Response(200, body=[{"id": "407b1ece-a115-11e5-b1d9-22000b95c3d9" , "worth_it": true}])
-     */
     public function index()
     {
         $reviews = $this->reviewRepository->findAll();
@@ -56,26 +53,11 @@ class ReviewController extends Controller
         );
     }
 
-    /**
-     * Submit a new review
-     *
-     * Submit a new review with a `verdict`
-     *
-     * @Post("/")
-     * @Request({"worth_it": true})
-     * @Response(200, body={"id": "407b1ece-a115-11e5-b1d9-22000b95c3d9" , "worth_it": true})
-     *
-     * @param Request $request
-     */
     public function store(Request $request)
     {
         $input = $request->json();
 
-        $review = new Review;
-        $review->setVerdictFromBool($input->get('worth_it'));
-
-        EntityManager::persist($review);
-        EntityManager::flush();
+        $review = $this->reviewService->createFromInput($input);
 
         return response()->json(
             (new ReviewSerializer)->one($review),

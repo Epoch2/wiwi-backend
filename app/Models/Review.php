@@ -19,6 +19,8 @@ class Review
     const VERDICT_WORTH_IT = 2;
 
     protected $id;
+    protected $product;
+    protected $author;
     protected $verdict;
 
     public function setVerdictFromBool($worthIt)

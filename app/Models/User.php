@@ -24,6 +24,7 @@ class User implements Authenticatable
     protected $password;
     protected $firstName;
     protected $lastName;
+    protected $reviews;
 
     /**
      * Get the column name for the primary key

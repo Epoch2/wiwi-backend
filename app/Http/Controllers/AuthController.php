@@ -43,6 +43,11 @@ class AuthController extends Controller
         );
     }
 
+    public function refresh()
+    {
+        return response(null, HttpCodes::HTTP_OK);
+    }
+
     private function getCredentials(Request $request)
     {
         return [

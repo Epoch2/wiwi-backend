@@ -11,15 +11,20 @@
 |
 */
 
-$app->get('/', function () use ($app) {
-    return $app->welcome();
-});
-
+// Resource routes
 $app->group(['namespace' => 'App\Http\Controllers'], function($app) {
+    $app->get('/reviews', 'ReviewController@index');
+    $app->get('/products', 'ProductController@index');
+
     // Protected
-    $app->group(['namespace' => 'App\Http\Controllers', 'middleware' => ['jwt.auth', 'jwt.refresh']], function($app) {
-        $app->get('/reviews', 'ReviewController@index');
+    $app->group(['namespace' => 'App\Http\Controllers', 'middleware' => ['jwt.auth']], function($app) {
         $app->post('/reviews', 'ReviewController@store');
+        $app->post('/products', 'ProductController@store');
+    });
+
+    // Token refresh
+    $app->group(['namespace' => 'App\Http\Controllers', 'middleware' => 'jwt.refresh'], function($app) {
+        $app->get('/refresh', 'AuthController@refresh');
     });
 
     $app->post('/login', 'AuthController@login');

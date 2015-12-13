@@ -5,6 +5,12 @@ App\Models\User:
      id:
        generator:
          strategy: UUID
+
+  oneToMany:
+    reviews:
+      targetEntity: App\Models\Review
+      mappedBy: author
+
   fields:
     email:
       type: string
