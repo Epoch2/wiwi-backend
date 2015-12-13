@@ -92,6 +92,9 @@ class CorsMiddleware {
         else {
             $response = $next($request);
         }
+
+        $response->header('Access-Control-Allow-Headers', $request->header('Access-Control-Request-Headers'));
+
         $this->setCorsHeaders($request, $response);
         return $response;
     }
