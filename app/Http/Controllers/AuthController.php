@@ -31,7 +31,10 @@ class AuthController extends Controller
 
         try {
             if (!$token = JWTAuth::attempt($credentials)) {
-                throw new UnauthorizedHttpException('Invalid credentials!');
+                return response()->json(
+                    ['error' => 'Invalid credentials!'],
+                    HttpCodes::HTTP_UNAUTHORIZED
+                );
             }
         } catch (JWTException $e) {
             throw new HttpException(HttpCodes::HTTP_INTERNAL_SERVER_ERROR, 'Token creation failed!');
