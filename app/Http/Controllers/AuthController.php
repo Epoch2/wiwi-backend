@@ -37,10 +37,8 @@ class AuthController extends Controller
             throw new HttpException(HttpCodes::HTTP_INTERNAL_SERVER_ERROR, 'Token creation failed!');
         }
 
-        return response()->json(
-            ['token' => $token],
-            HttpCodes::HTTP_OK
-        );
+        return response(null, HttpCodes::HTTP_OK)
+            ->header('Authorization', 'Bearer ' . $token);
     }
 
     public function refresh()
