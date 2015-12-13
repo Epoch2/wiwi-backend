@@ -64,4 +64,18 @@ class ReviewController extends Controller
             HttpCodes::HTTP_CREATED
         );
     }
+
+    public function update(Request $request, $reviewId)
+    {
+        $input = $request->json();
+
+        $review = $this->reviewRepository->find($reviewId);
+
+        $this->reviewService->updateFromInput($review, $input);
+
+        return response()->json(
+            (new ReviewSerializer)->one($review),
+            HttpCodes::HTTP_OK
+        );
+    }
 }

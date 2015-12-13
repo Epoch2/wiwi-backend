@@ -18,7 +18,12 @@ $app->group(['namespace' => 'App\Http\Controllers'], function($app) {
 
     // Protected
     $app->group(['namespace' => 'App\Http\Controllers', 'middleware' => ['jwt.auth']], function($app) {
+
+        // Reviews
         $app->post('/reviews', 'ReviewController@store');
+        $app->put('/reviews/{id}', 'ReviewController@update');
+
+        // Products
         $app->post('/products', 'ProductController@store');
     });
 

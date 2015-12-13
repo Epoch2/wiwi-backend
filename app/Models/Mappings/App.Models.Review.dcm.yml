@@ -5,9 +5,6 @@ App\Models\Review:
     id:
       generator:
         strategy: UUID
-  fields:
-    verdict:
-      type: smallint
 
   manyToOne:
     product:
@@ -22,3 +19,7 @@ App\Models\Review:
       joinColumn:
         name: user_id
         referencedColumnName: id
+
+  fields:
+    verdict:
+      type: smallint
