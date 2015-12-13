@@ -39,7 +39,7 @@ class ProductService
         return $this->buildFromInput($product, $input);
     }
 
-    public function buildFromInput(Product $product, $input)
+    protected function buildFromInput(Product $product, $input)
     {
         $title = $input->get('title');
         // #TODO: Shouldn't really be optional
