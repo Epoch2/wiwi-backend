@@ -43,9 +43,16 @@ class ProductController extends Controller
         $this->productService = $productService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $products = $this->productRepository->findAll();
+        // #TODO: Implement real searching
+        if ($request->has('query')) {
+            $titleQuery = $request->get('query');
+
+            $products = $this->productRepository->searchByTitle($titleQuery);
+        } else {
+            $products = $this->productRepository->findAll();
+        }
 
         return response()->json(
             (new ProductSerializer)->many($products),

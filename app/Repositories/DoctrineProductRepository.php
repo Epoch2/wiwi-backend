@@ -15,4 +15,15 @@ use Doctrine\ORM\EntityRepository;
 // Repositories
 use App\Repositories\Contracts\ProductRepository;
 
-class DoctrineProductRepository extends EntityRepository implements ProductRepository {}
+class DoctrineProductRepository extends EntityRepository implements ProductRepository {
+    public function searchByTitle($title)
+    {
+        $query = $this->createQueryBuilder('p')
+            ->where('p.title LIKE :title')
+            ->setParameter('title', '%' . $title . '%')
+            ->getQuery();
+        $products = $query->getResult();
+
+        return $products;
+    }
+}
